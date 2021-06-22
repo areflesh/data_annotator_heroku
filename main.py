@@ -26,7 +26,7 @@ if (name!=''):
         state.n = 0
         image_name = state.file_list[state.n]
     
-    record=cur.execute("SELECT annotation FROM annotations WHERE name='"+name+"' AND file='"+image_name+"';")
+    record=cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
     print(record)
     if record is None:
         provided_des = "None"
@@ -56,8 +56,8 @@ if (name!=''):
         annot[name]=annotation
         cur.execute("INSERT INTO annotations (name, file, annotation) VALUES (%s, %s, %s)",(name, image_name, annotation))
         con.commit()
-        with open(work_dir+os.path.splitext(image_name)[0]+'.json', 'w') as json_file:
-            json.dump(annot, json_file)
+        #with open(work_dir+os.path.splitext(image_name)[0]+'.json', 'w') as json_file:
+            #json.dump(annot, json_file)
         
     if col2.button("Next image",key = state.n):
         state.n=state.n+1
