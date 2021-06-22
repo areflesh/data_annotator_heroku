@@ -13,6 +13,7 @@ name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
 con = psycopg2.connect(DATABASE_URL)
 cur = con.cursor()
+cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation varchar);")
 if (name!=''):
     st.sidebar.markdown("** Attention! ** To avoid losing the data please upload data to the server before closing the app")
     work_dir = "./paintings/"+name+"/"
@@ -25,12 +26,10 @@ if (name!=''):
         state.n = 0
         image_name = state.file_list[state.n]
     
-    if os.path.exists("./paintings/"+name+"/"+os.path.splitext(image_name)[0]+'.json'):
-        with open("./paintings/"+name+"/"+os.path.splitext(image_name)[0]+'.json','r') as json_file:
-            provided_meta_data = json.load(json_file)
-        provided_des = provided_meta_data[name]
-    else:
-        provided_des="None"
+    record=cur.execute("SELECT annotation FROM annotations WHERE name='"+name+"' AND file='"+image_name+";")
+    
+    
+    provided_des=record[0]
     
     col1,col2 = st.beta_columns(2)
     col1.markdown('# Image')
