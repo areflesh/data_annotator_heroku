@@ -29,7 +29,7 @@ if (name!=''):
     cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
     record = cur.fetchall()
     print(record)
-    if record is None:
+    if len(record)==0:
         provided_des = "None"
     else:
         provided_des = ""
@@ -66,10 +66,10 @@ if (name!=''):
         state.n=state.n+1
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
-    if st.sidebar.button("Upload data to server"):
+    if st.sidebar.button("Close connection"):
         con.commit()
         cur.close()
-        conn.close()
+        con.close()
         st.sidebar.write("Connection is closed")
     col2.markdown('''<p style='text-align: justify;'>The BLEU score compares a sentence against one or more reference sentences and tells how well does the 
                     candidate sentence matched the list of reference sentences. It gives an output score between 0 and 1. A BLEU score of 1 means that the 
