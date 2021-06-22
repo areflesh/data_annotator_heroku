@@ -9,7 +9,7 @@ import paramiko
 from paramiko import RSAKey
 from base64 import decodebytes
 from Levenshtein import distance
-from nltk.translate.bleu_score import sentence_bleu
+#from nltk.translate.bleu_score import sentence_bleu
 st.set_page_config(layout="wide")
 state = SessionState.get(n = 0, file_list=os.listdir("./paintings/images/"))
 name = st.sidebar.text_input("Input your name and press Enter please:","")
@@ -46,7 +46,7 @@ if (name!=''):
     
     annotation = col2.text_input("Input annotation:")
     if annotation:
-        col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
+        #col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
         col2.markdown(" ** Levenshtein distance: **"+str(distance(meta_data["annot"],annotation)))
     if col2.button("I like it! Save! "):   
         print(image_name)
@@ -63,7 +63,7 @@ if (name!=''):
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
     if st.sidebar.button("Upload data to server"):
-        upload_data(name,work_dir)
+        #upload_data(name,work_dir)
         st.sidebar.write("Data uploaded correctly")
     col2.markdown('''<p style='text-align: justify;'>The BLEU score compares a sentence against one or more reference sentences and tells how well does the 
                     candidate sentence matched the list of reference sentences. It gives an output score between 0 and 1. A BLEU score of 1 means that the 
