@@ -54,7 +54,7 @@ if (name!=''):
         annot = {"File":image_name}
         annot[name]=annotation
         cur.execute("INSERT INTO annotations (name, file, annotation) VALUES (%s, %s, %s)",(name, image_name, annotation))
-        conn.commit()
+        con.commit()
         with open(work_dir+os.path.splitext(image_name)[0]+'.json', 'w') as json_file:
             json.dump(annot, json_file)
         
