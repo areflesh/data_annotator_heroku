@@ -26,12 +26,15 @@ if (name!=''):
         state.n = 0
         image_name = state.file_list[state.n]
     
-    record=cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
+    cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
+    record = cur.fetchone()
     print(record)
     if record is None:
         provided_des = "None"
     else:
-        provided_des=record[0]
+        provided_des = ""
+        for i in record:
+            provided_des=provided_des+i+";"
     col1,col2 = st.beta_columns(2)
     col1.markdown('# Image')
     col1.markdown("** File name: **" + image_name)
