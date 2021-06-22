@@ -11,10 +11,10 @@ st.set_page_config(layout="wide")
 state = SessionState.get(n = 0, file_list=os.listdir("./paintings/images/"))
 name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
-con = psycopg2.connect(DATABASE_URL)
-cur = con.cursor()
-cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation varchar);")
 if (name!=''):
+    con = psycopg2.connect(DATABASE_URL)
+    cur = con.cursor()
+    cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation varchar);")
     st.sidebar.markdown("** Attention! ** Before closing the app please close connection with database")
     work_dir = "./paintings/"+name+"/"
     if not os.path.exists(work_dir):
@@ -67,9 +67,7 @@ if (name!=''):
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
     if st.sidebar.button("Close connection"):
-        con.commit()
-        cur.close()
-        con.close()
+        
         st.sidebar.write("Connection is closed")
     col2.markdown('''<p style='text-align: justify;'>The BLEU score compares a sentence against one or more reference sentences and tells how well does the 
                     candidate sentence matched the list of reference sentences. It gives an output score between 0 and 1. A BLEU score of 1 means that the 
@@ -77,3 +75,6 @@ if (name!=''):
                     The distance value describes the minimal number of deletions, insertions, or substitutions that are required to transform one string (the source) 
                     into another (the target).The greater the Levenshtein distance, the greater are the difference between the strings. 
                     <b> Please take into account that not of all images have original captions. It means that for some images BLEU score will be equal to 0 and Levenshtein distance will be relatively high</b</p>''',unsafe_allow_html=True)
+    con.commit()
+        cur.close()
+    con.close()
