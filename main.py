@@ -27,6 +27,7 @@ if (name!=''):
         image_name = state.file_list[state.n]
     
     record=cur.execute("SELECT annotation FROM annotations WHERE name='"+name+"' AND file='"+image_name+"';")
+    print(record)
     if record is None:
         provided_des = "None"
     else:
