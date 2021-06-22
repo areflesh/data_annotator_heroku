@@ -4,21 +4,21 @@ import json
 from os.path import splitext
 import SessionState
 from plyer import notification
-import pysftp
-import paramiko
-from paramiko import RSAKey
-from base64 import decodebytes
+import psycopg2
 from Levenshtein import distance
 #from nltk.translate.bleu_score import sentence_bleu
 st.set_page_config(layout="wide")
 state = SessionState.get(n = 0, file_list=os.listdir("./paintings/images/"))
 name = st.sidebar.text_input("Input your name and press Enter please:","")
+DATABASE_URL = os.environ['DATABASE_URL']
+con = psycopg2.connect(DATABASE_URL)
+cur = con.cursor()
 if (name!=''):
     st.sidebar.markdown("** Attention! ** To avoid losing the data please upload data to the server before closing the app")
     work_dir = "./paintings/"+name+"/"
     if not os.path.exists(work_dir):
         os.mkdir(work_dir)  
-    download_data(name,work_dir,sec_key,sec_host,sec_user,sec_pas)
+    #download_data(name,work_dir,sec_key,sec_host,sec_user,sec_pas)
     try:
         image_name = state.file_list[state.n]
     except: 
