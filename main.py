@@ -26,7 +26,7 @@ if (name!=''):
         state.n = 0
         image_name = state.file_list[state.n]
     
-    record=cur.execute('''SELECT annotation FROM annotations WHERE name="'''+name+'''" AND file="'''+image_name+'''";''')
+    record=cur.execute("SELECT annotation FROM annotations WHERE name='"+name+"' AND file='"+image_name+"';")
     
     provided_des=record[0]
     col1,col2 = st.beta_columns(2)
