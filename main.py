@@ -13,7 +13,7 @@ name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
 con = psycopg2.connect(DATABASE_URL)
 cur = con.cursor()
-cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation text);")
+cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation varchar);")
 if (name!=''):
     st.sidebar.markdown("** Attention! ** Before closing the app please close connection with database")
     work_dir = "./paintings/"+name+"/"
