@@ -26,11 +26,9 @@ if (name!=''):
         state.n = 0
         image_name = state.file_list[state.n]
     
-    record=cur.execute("SELECT annotation FROM annotations WHERE name='"+name+"' AND file='"+image_name+";")
-    
+    record=cur.execute('''SELECT annotation FROM annotations WHERE name="'''+name+'''" AND file="'''+image_name+'''";''')
     
     provided_des=record[0]
-    
     col1,col2 = st.beta_columns(2)
     col1.markdown('# Image')
     col1.markdown("** File name: **" + image_name)
@@ -53,7 +51,8 @@ if (name!=''):
         
         annot = {"File":image_name}
         annot[name]=annotation
-
+        cur.execute("INSERT INTO annotations (name, file, annotation) VALUES (%s, %s, %s)",(name, image_name, annotation))
+        conn.commit()
         with open(work_dir+os.path.splitext(image_name)[0]+'.json', 'w') as json_file:
             json.dump(annot, json_file)
         
