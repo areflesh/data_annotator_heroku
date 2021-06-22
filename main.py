@@ -6,7 +6,7 @@ import SessionState
 from plyer import notification
 import psycopg2
 from Levenshtein import distance
-#from nltk.translate.bleu_score import sentence_bleu
+from nltk.translate.bleu_score import sentence_bleu
 st.set_page_config(layout="wide")
 state = SessionState.get(n = 0, file_list=os.listdir("./paintings/images/"))
 name = st.sidebar.text_input("Input your name and press Enter please:","")
@@ -15,7 +15,7 @@ con = psycopg2.connect(DATABASE_URL)
 cur = con.cursor()
 cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation varchar);")
 if (name!=''):
-    st.sidebar.markdown("** Attention! ** To avoid losing the data please upload data to the server before closing the app")
+    st.sidebar.markdown("** Attention! ** Before closing the app please close connection with database")
     work_dir = "./paintings/"+name+"/"
     if not os.path.exists(work_dir):
         os.mkdir(work_dir)  
@@ -27,14 +27,14 @@ if (name!=''):
         image_name = state.file_list[state.n]
     
     cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
-    record = cur.fetchone()
+    record = cur.fetchall()
     print(record)
     if record is None:
         provided_des = "None"
     else:
         provided_des = ""
         for i in record:
-            provided_des=provided_des+i+";"
+            provided_des=provided_des+i[0]+";"
     col1,col2 = st.beta_columns(2)
     col1.markdown('# Image')
     col1.markdown("** File name: **" + image_name)
@@ -49,7 +49,7 @@ if (name!=''):
     
     annotation = col2.text_input("Input annotation:")
     if annotation:
-        #col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
+        col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
         col2.markdown(" ** Levenshtein distance: **"+str(distance(meta_data["annot"],annotation)))
     if col2.button("I like it! Save! "):   
         print(image_name)
@@ -67,8 +67,10 @@ if (name!=''):
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
     if st.sidebar.button("Upload data to server"):
-        #upload_data(name,work_dir)
-        st.sidebar.write("Data uploaded correctly")
+        con.commit()
+        cur.close()
+        conn.close()
+        st.sidebar.write("Connection is closed")
     col2.markdown('''<p style='text-align: justify;'>The BLEU score compares a sentence against one or more reference sentences and tells how well does the 
                     candidate sentence matched the list of reference sentences. It gives an output score between 0 and 1. A BLEU score of 1 means that the 
                     candidate sentence perfectly matches one of the reference sentences. <br><br>
