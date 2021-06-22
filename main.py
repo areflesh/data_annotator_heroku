@@ -15,7 +15,7 @@ if (name!=''):
     con = psycopg2.connect(DATABASE_URL)
     cur = con.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation text);")
-    st.sidebar.markdown("** Attention! ** Before closing the app please close connection with database")
+    #st.sidebar.markdown("** Attention! ** Before closing the app please close connection with database")
     work_dir = "./paintings/"+name+"/"
     if not os.path.exists(work_dir):
         os.mkdir(work_dir)  
