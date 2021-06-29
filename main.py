@@ -54,7 +54,7 @@ if (name!=''):
     #col2.markdown("** Original caption: **"+meta_data["annot"])
     col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
-    value = ""
+    value = " "
     annotation = anno_place.text_area("Input annotation:", value, height=100, key = 1)
     if annotation:
         if meta_data["annot"]!="nan":
@@ -63,7 +63,7 @@ if (name!=''):
     if col2.button("I like it! Save! "):   
         print(image_name)
         print(annotation)
-        value = ""
+        value = " "
         
         annot = {"File":image_name}
         annot[name]=annotation
