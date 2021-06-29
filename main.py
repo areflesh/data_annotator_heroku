@@ -53,7 +53,8 @@ if (name!=''):
     col2.markdown('# Annotation')
     #col2.markdown("** Original caption: **"+meta_data["annot"])
     col2.markdown("** Provided caption: **"+provided_des)
-    annotation = col2.text_area("Input annotation:", height=100, key = 1)
+    anno_place = col2.empty()
+    annotation = anno_place.text_area("Input annotation:", height=100, key = 1)
     if annotation:
         if meta_data["annot"]!="nan":
             col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
@@ -61,7 +62,6 @@ if (name!=''):
     if col2.button("I like it! Save! "):   
         print(image_name)
         print(annotation)
-        col2.text_area("Input annotation:", " ", height=100, key = 1)
         
         annot = {"File":image_name}
         annot[name]=annotation

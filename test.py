@@ -1,5 +1,6 @@
-from nltk.translate.bleu_score import sentence_bleu
-reference = [['the', 'cat',"is","sitting","on","the","mat"]]
-test = ["there",'is',"cat","sitting","cat"]
-score = sentence_bleu(reference, test)
-print(score)
+import streamlit as st
+st.set_page_config(layout="wide")
+col1,col2 = st.beta_columns(2)
+place = col2.empty()
+col1.text("sign")
+place.text("sign")
