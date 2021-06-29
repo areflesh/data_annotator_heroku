@@ -54,7 +54,7 @@ if (name!=''):
     #col2.markdown("** Original caption: **"+meta_data["annot"])
     col2.markdown("** Provided caption: **"+provided_des)
     
-    annotation = col2.text_input("Input annotation:")
+    annotation = col2.text_area("Input annotation:", height=100)
     if annotation:
         if meta_data["annot"]!="nan":
             col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
