@@ -12,7 +12,7 @@ st.set_page_config(layout="wide")
 def get_file_list():
     my_file = open("paintings/images/file_list.txt", "r")
     content = my_file.read()
-    f1 = content.split("\n")    
+    fl = content.split("\n")    
     return fl
 state = SessionState.get(n = 0)
 name = st.sidebar.text_input("Input your name and press Enter please:","")
