@@ -54,7 +54,7 @@ if (name!=''):
     #col2.markdown("** Original caption: **"+meta_data["annot"])
     col2.markdown("** Provided caption: **"+provided_des)
     
-    annotation = col2.text_area("Input annotation:", height=100)
+    annotation = col2.text_area("Input annotation:", annotation, height=100)
     if annotation:
         if meta_data["annot"]!="nan":
             col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
@@ -74,10 +74,12 @@ if (name!=''):
         state.n=state.n+1
         if state.n == 101:
             state.n = 0
+            annotation = ''
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
         if state.n == -1:
             state.n = 100
+            annotation = ''
     #if st.sidebar.button("Close connection"):
         
         #st.sidebar.write("Connection is closed")
