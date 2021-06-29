@@ -8,7 +8,11 @@ import psycopg2
 from Levenshtein import distance
 from nltk.translate.bleu_score import sentence_bleu
 st.set_page_config(layout="wide")
-state = SessionState.get(n = 0, file_list=os.listdir("./paintings/images/"))
+@st.cache
+def get_file_list():
+    fl=os.listdir("./paintings/images/")
+    return fl
+state = SessionState.get(n = 0)
 name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
 if (name!=''):
@@ -16,15 +20,16 @@ if (name!=''):
     cur = con.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS annotations (id serial PRIMARY KEY, name varchar, file varchar, annotation text);")
     #st.sidebar.markdown("** Attention! ** Before closing the app please close connection with database")
-    work_dir = "./paintings/"+name+"/"
-    if not os.path.exists(work_dir):
-        os.mkdir(work_dir)  
+    #work_dir = "./paintings/"+name+"/"
+    #if not os.path.exists(work_dir):
+     #   os.mkdir(work_dir)  
     #download_data(name,work_dir,sec_key,sec_host,sec_user,sec_pas)
+    file_list = get_file_list()
     try:
-        image_name = state.file_list[state.n]
+        image_name = file_list[state.n]
     except: 
         state.n = 0
-        image_name = state.file_list[state.n]
+        image_name = file_list[state.n]
     
     cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
     record = cur.fetchall()
