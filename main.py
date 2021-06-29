@@ -7,11 +7,12 @@ from plyer import notification
 import psycopg2
 from Levenshtein import distance
 from nltk.translate.bleu_score import sentence_bleu
-import pandas as pd
 st.set_page_config(layout="wide")
 @st.cache
 def get_file_list():
-    fl=pd.read_csv("paintings/images/file_data.csv",index_col=0)["0"].values
+    my_file = open("paintings/images/file_list.txt", "r")
+    content = my_file.read()
+    f1 = content.split("\n")    
     return fl
 state = SessionState.get(n = 0)
 name = st.sidebar.text_input("Input your name and press Enter please:","")
