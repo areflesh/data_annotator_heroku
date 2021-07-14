@@ -78,14 +78,14 @@ if (name!=''):
 
     if col2.button("Next image",key = state.n):
         state.n=state.n+1
-        if state.n == 93:
+        if state.n == 92:
             state.n = 0
         rerun()
             
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
         if state.n == -1:
-            state.n = 92
+            state.n = 91
         rerun()
     #if st.sidebar.button("Close connection"):
         
