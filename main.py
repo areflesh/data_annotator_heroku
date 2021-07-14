@@ -42,7 +42,7 @@ if (name!=''):
     if len(record)==0:
         f_n = "** File name: **" + image_name
     else:
-        f_n = "** File name: **" + image_name + "* Already annotated *"
+        f_n = "** File name: **" + image_name + ";* Already annotated *"
     col1,col2 = st.beta_columns(2)
     col1.markdown('# Image')
     col1.markdown(f_n)
