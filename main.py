@@ -44,9 +44,10 @@ if (name!=''):
         for i in record:
             provided_des=provided_des+i[0]+";"
     col1,col2 = st.beta_columns(2)
+    image_place = col1.empty()
     col1.markdown('# Image')
     col1.markdown("** File name: **" + image_name)
-    col1.image("./paintings/images/"+image_name)
+    image_place.image("./paintings/images/"+image_name)
     with open("./paintings/descriptions/"+os.path.splitext(image_name)[0]+'.json','r') as json_file:
         meta_data = json.load(json_file)
     
@@ -80,48 +81,23 @@ if (name!=''):
         state.n=state.n+1
         if state.n == 93:
             state.n = 0
+
         try:
             image_name = file_list[state.n]
         except: 
             state.n = 0
-            image_name = file_list[state.n]
+        image_name = file_list[state.n]
     
         cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
         record = cur.fetchall()
-        
-        if len(record)==0:
-            provided_des = "None"
-        else:
-            provided_des = ""
-            for i in record:
-                provided_des=provided_des+i[0]+";"
-        col1,col2 = st.beta_columns(2)
+        image_place.empty() 
         col1.markdown('# Image')
         col1.markdown("** File name: **" + image_name)
-        col1.image("./paintings/images/"+image_name)
+        image_place.image("./paintings/images/"+image_name)
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
         if state.n == -1:
             state.n = 92
-        try:
-            image_name = file_list[state.n]
-        except: 
-            state.n = 0
-            image_name = file_list[state.n]
-    
-        cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
-        record = cur.fetchall()
-        
-        if len(record)==0:
-            provided_des = "None"
-        else:
-            provided_des = ""
-            for i in record:
-                provided_des=provided_des+i[0]+";"
-        col1,col2 = st.beta_columns(2)
-        col1.markdown('# Image')
-        col1.markdown("** File name: **" + image_name)
-        col1.image("./paintings/images/"+image_name)
 
     #if st.sidebar.button("Close connection"):
         
