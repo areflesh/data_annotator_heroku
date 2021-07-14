@@ -62,7 +62,7 @@ if (name!=''):
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
         #    col2.markdown(" ** Levenshtein distance: **"+str(distance(meta_data["annot"],annotation)))
         anno_place.empty()
-        col2.write(annotation)
+        col2.markdown("** Saved caption: **"+annotation)
     if col2.button("I like it! Save! "):   
         #print(image_name)
         #print(annotation)
