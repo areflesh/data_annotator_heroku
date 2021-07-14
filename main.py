@@ -57,13 +57,15 @@ if (name!=''):
     anno_place = col2.empty()
     value = " "
     annotation = anno_place.text_area("Input annotation:", value, height=100, key = 1)
-    #if annotation:
+    if annotation:
         #if meta_data["annot"]!="nan":
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
         #    col2.markdown(" ** Levenshtein distance: **"+str(distance(meta_data["annot"],annotation)))
+        anno_place.empty()
+        st.write(annotation)
     if col2.button("I like it! Save! "):   
-        print(image_name)
-        print(annotation)
+        #print(image_name)
+        #print(annotation)
         value = " "
         end_time = datetime.datetime.now().time().strftime('%H:%M:%S')
         total_time=(datetime.datetime.strptime(end_time,'%H:%M:%S') - datetime.datetime.strptime(state.start_time,'%H:%M:%S'))
