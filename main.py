@@ -8,10 +8,6 @@ import psycopg2
 from Levenshtein import distance
 from nltk.translate.bleu_score import sentence_bleu
 import datetime
-import streamlit.ReportThread as ReportThread
-from streamlit.server.Server import Server
-
-
 
 st.set_page_config(layout="wide")
 @st.cache
@@ -20,34 +16,8 @@ def get_file_list():
     content = my_file.read()
     fl = content.split("\n")    
     return fl
-def trigger_rerun():
-    ctx = ReportThread.get_report_ctx()
-
-    this_session = None
-
-    current_server = Server.get_current()
-    if hasattr(current_server, '_session_infos'):
-        # Streamlit < 0.56
-        session_infos = Server.get_current()._session_infos.values()
-    else:
-        session_infos = Server.get_current()._session_info_by_id.values()
-
-    for session_info in session_infos:
-        s = session_info.session
-        if (
-                # Streamlit < 0.54.0
-                (hasattr(s, '_main_dg') and s._main_dg == ctx.main_dg)
-                or
-                # Streamlit >= 0.54.0
-                (not hasattr(s, '_main_dg') and s.enqueue == ctx.enqueue)
-        ):
-            this_session = s
-
-    if this_session is None:
-        raise RuntimeError(
-            "Oh noes. Couldn't get your Streamlit Session object"
-            'Are you doing something fancy with threads?')
-    this_session.request_rerun() 
+def rerun():
+    raise st.script_runner.RerunException(st.script_request_queue.RerunData(None))
 state = SessionState.get(n = 0,start_time = datetime.datetime.now().time().strftime('%H:%M:%S'))
 name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
@@ -110,13 +80,13 @@ if (name!=''):
         state.n=state.n+1
         if state.n == 93:
             state.n = 0
-        trigger_rerun()
+        rerun()
             
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
         if state.n == -1:
             state.n = 92
-        trigger_rerun()
+        rerun()
     #if st.sidebar.button("Close connection"):
         
         #st.sidebar.write("Connection is closed")
