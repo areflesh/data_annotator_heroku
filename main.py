@@ -38,16 +38,13 @@ if (name!=''):
     record = cur.fetchall()
     print(record)
     if len(record)==0:
-        provided_des = "None"
+        f_n = "** File name: **" + image_name
     else:
-        provided_des = ""
-        for i in record:
-            provided_des=provided_des+i[0]+";"
+        f_n = "** File name: **" + image_name + "(Already annotated)"
     col1,col2 = st.beta_columns(2)
-    image_place = col1.empty()
     col1.markdown('# Image')
-    col1.markdown("** File name: **" + image_name)
-    image_place.image("./paintings/images/"+image_name)
+    col1.markdown(f_n)
+    col1.image("./paintings/images/"+image_name)
     with open("./paintings/descriptions/"+os.path.splitext(image_name)[0]+'.json','r') as json_file:
         meta_data = json.load(json_file)
     
