@@ -44,9 +44,11 @@ if (name!=''):
         for i in record:
             provided_des=provided_des+i[0]+";"
     col1,col2 = st.beta_columns(2)
-    image_place = col1.empty()
+    title_place = col1.empty()
     col1.markdown('# Image')
-    col1.markdown("** File name: **" + image_name)
+    file_name = col1.empty()
+    file_name.markdown("** File name: **" + image_name)
+    image_place = col1.empty()
     image_place.image("./paintings/images/"+image_name)
     with open("./paintings/descriptions/"+os.path.splitext(image_name)[0]+'.json','r') as json_file:
         meta_data = json.load(json_file)
@@ -90,9 +92,11 @@ if (name!=''):
     
         cur.execute("SELECT annotation FROM annotations WHERE name=%s AND file=%s",(name,image_name))
         record = cur.fetchall()
-        image_place.empty() 
+        title_place.empty()
         col1.markdown('# Image')
-        col1.markdown("** File name: **" + image_name)
+        file_name.empty()
+        file_name.markdown("** File name: **" + image_name)
+        image_place.empty()
         image_place.image("./paintings/images/"+image_name)
     if col2.button("Previous image",key = state.n):
         state.n=state.n-1
