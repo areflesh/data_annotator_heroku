@@ -69,7 +69,7 @@ if (name!=''):
         total_time=(datetime.datetime.strptime(end_time,'%H:%M:%S') - datetime.datetime.strptime(state.start_time,'%H:%M:%S'))
         annot = {"File":image_name}
         annot[name]=annotation
-        cur.execute("INSERT INTO annotations (name, file, annotation, track_time) VALUES (%s, %s, %s)",(name, image_name, annotation,total_time))
+        cur.execute("INSERT INTO annotations (name, file, annotation, track_time) VALUES (%s, %s, %s, %s)",(name, image_name, annotation,total_time))
         con.commit()
         #with open(work_dir+os.path.splitext(image_name)[0]+'.json', 'w') as json_file:
             #json.dump(annot, json_file)
