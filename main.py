@@ -53,20 +53,20 @@ if (name!=''):
     
     col2.markdown('# Annotation')
     #col2.markdown("** Original caption: **"+meta_data["annot"])
-    col2.markdown("** Provided caption: **"+provided_des)
+    #col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
-    value = " "
+    #value = " "
     annotation = anno_place.text_area("Input annotation:", height=100, key = 1)
     if annotation:
         #if meta_data["annot"]!="nan":
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
         #    col2.markdown(" ** Levenshtein distance: **"+str(distance(meta_data["annot"],annotation)))
         anno_place.empty()
-        st.write(annotation)
+        col2.write(annotation)
     if col2.button("I like it! Save! "):   
         #print(image_name)
         #print(annotation)
-        value = " "
+        #value = " "
         end_time = datetime.datetime.now().time().strftime('%H:%M:%S')
         total_time=(datetime.datetime.strptime(end_time,'%H:%M:%S') - datetime.datetime.strptime(state.start_time,'%H:%M:%S'))
         annot = {"File":image_name}
