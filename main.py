@@ -77,15 +77,15 @@ if (name!=''):
             #json.dump(annot, json_file)
         state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 
-    if col2.button("Next image",key = state.n):
-        state.n=state.n+1
-        if state.n == 101:
-            state.n = 0
+        if col2.button("Next image",key = state.n):
+            state.n=state.n+1
+            if state.n == 101:
+                state.n = 0
 
-    if col2.button("Previous image",key = state.n):
-        state.n=state.n-1
-        if state.n == -1:
-            state.n = 100
+        if col2.button("Previous image",key = state.n):
+            state.n=state.n-1
+            if state.n == -1:
+                state.n = 100
 
     #if st.sidebar.button("Close connection"):
         
