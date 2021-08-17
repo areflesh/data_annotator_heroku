@@ -86,7 +86,7 @@ if (name!=''):
             st.session_state.n = 0
         rerun()
             
-    if col2.button("Previous image",key = chr(st.session_state.n)):
+    if col2.button("Previous image",key = chr(st.session_state.n+1)):
         st.session_state.n=st.session_state.n-1
         if st.session_state.n == -1:
             st.session_state.n = 91
