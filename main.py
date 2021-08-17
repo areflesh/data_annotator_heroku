@@ -60,7 +60,7 @@ if (name!=''):
     #col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
     #value = " "
-    annotation = anno_place.text_area("Input annotation:", height=100, key=chr(key_annot))
+    annotation = anno_place.text_area("Input annotation:", height=100, key=chr(st.session_state.annotation_key))
     if annotation:
         #if meta_data["annot"]!="nan":
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
