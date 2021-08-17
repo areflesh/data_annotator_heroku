@@ -47,7 +47,7 @@ if (name!=''):
         f_n = "** File name: **" + image_name
     else:
         f_n = "** File name: **" + image_name + ";* Already annotated *"
-    col1,col2 = st.beta_columns(2)
+    col1,col2 = st.columns(2)
     col1.markdown('# Image')
     col1.markdown(f_n)
     col1.image("./paintings/images/"+image_name)
@@ -59,7 +59,7 @@ if (name!=''):
     #col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
     #value = " "
-    annotation = anno_place.text_area("Input annotation:", height=100, key = 1)
+    annotation = anno_place.text_area("Input annotation:", height=100)
     if annotation:
         #if meta_data["annot"]!="nan":
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
