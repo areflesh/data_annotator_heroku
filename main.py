@@ -27,6 +27,8 @@ if 'next_key' not in st.session_state:
     st.session_state.next_key=100
 if 'previous_key' not in st.session_state:
     st.session_state.previous_key=200
+if 'annotation_key' not in st.session_state:
+    st.session_state.annotation_key=1
 name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
 if (name!=''):
@@ -63,7 +65,7 @@ if (name!=''):
     #col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
     #value = " "
-    annotation = anno_place.text_area("Input annotation:", height=100, key=chr(1))
+    annotation = anno_place.text_area("Input annotation:", height=100, key=chr(st.session_state.annotation_key))
     if annotation:
         #if meta_data["annot"]!="nan":
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
@@ -85,6 +87,7 @@ if (name!=''):
         st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 
     if col2.button("Next image",key = chr(st.session_state.next_key)):
+        st.session_state.annotation_key=st.session_state.annotation_key+1
         st.session_state.next_key=st.session_state.next_key+1
         st.session_state.n=st.session_state.n+1
         if st.session_state.n == 92:
@@ -92,6 +95,7 @@ if (name!=''):
         rerun()
             
     if col2.button("Previous image",key = chr(st.session_state.previous_key)):
+        st.session_state.annotation_key=st.session_state.annotation_key+1
         st.session_state.n=st.session_state.n-1
         st.session_state.previous_key=st.session_state.previous_key+1
         if st.session_state.n == -1:
