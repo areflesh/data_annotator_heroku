@@ -84,14 +84,16 @@ if (name!=''):
             #json.dump(annot, json_file)
         st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 
-    if col2.button("Next image",key = chr(st.session_state.n)):
+    if col2.button("Next image",key = chr(st.session_state.next_key)):
+        st.session_state.next_key=st.session_state.next_key+1
         st.session_state.n=st.session_state.n+1
         if st.session_state.n == 92:
             st.session_state.n = 0
         rerun()
             
-    if col2.button("Previous image",key = chr(st.session_state.n+1)):
+    if col2.button("Previous image",key = chr(st.session_state.previous_key)):
         st.session_state.n=st.session_state.n-1
+        st.session_state.previous_key=st.session_state.previous_key+1
         if st.session_state.n == -1:
             st.session_state.n = 91
         rerun()
