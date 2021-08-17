@@ -23,6 +23,10 @@ if 'start_time' not in st.session_state:
     st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 if 'n' not in st.session_state:
     st.session_state.n=0
+if 'next_key' not in st.session_state:
+    st.session_state.next_key=100
+if 'previous_key' not in st.session_state:
+    st.session_state.previous_key=200
 name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
 if (name!=''):
