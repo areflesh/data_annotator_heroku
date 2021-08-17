@@ -8,7 +8,7 @@ import psycopg2
 from Levenshtein import distance
 from nltk.translate.bleu_score import sentence_bleu
 import datetime
-
+import random
 st.set_page_config(layout="wide")
 @st.cache
 def get_file_list():
@@ -23,12 +23,15 @@ if 'start_time' not in st.session_state:
     st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 if 'n' not in st.session_state:
     st.session_state.n=0
-if 'next_key' not in st.session_state:
-    st.session_state.next_key=100
-if 'previous_key' not in st.session_state:
-    st.session_state.previous_key=200
-if 'annotation_key' not in st.session_state:
-    st.session_state.annotation_key=1
+#if 'next_key' not in st.session_state:
+#    st.session_state.next_key=100
+#if 'previous_key' not in st.session_state:
+#    st.session_state.previous_key=200
+#if 'annotation_key' not in st.session_state:
+#    st.session_state.annotation_key=1
+key_list=random.sample(range(10, 30), 3)
+while len(set(key_list))!=3:
+    key_list=random.sample(range(10, 30), 3)
 name = st.sidebar.text_input("Input your name and press Enter please:","")
 DATABASE_URL = os.environ['DATABASE_URL']
 if (name!=''):
@@ -65,7 +68,7 @@ if (name!=''):
     #col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
     #value = " "
-    annotation = anno_place.text_area("Input annotation:", height=100, key=chr(st.session_state.annotation_key))
+    annotation = anno_place.text_area("Input annotation:", height=100, key=chr(key_list[0]))
     if annotation:
         #if meta_data["annot"]!="nan":
         #    col2.markdown(" ** BLEU Score: **"+str(sentence_bleu([meta_data["annot"].split(" ")],annotation.split(" "))))
@@ -86,17 +89,17 @@ if (name!=''):
             #json.dump(annot, json_file)
         st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 
-    if col2.button("Next image",key = chr(st.session_state.next_key)):
-        st.session_state.annotation_key=st.session_state.annotation_key+1
-        st.session_state.next_key=st.session_state.next_key+1
+    if col2.button("Next image",key = chr(key_list[1])):
+        #st.session_state.annotation_key=st.session_state.annotation_key+1
+        #st.session_state.next_key=st.session_state.next_key+1
         st.session_state.n=st.session_state.n+1
         if st.session_state.n == 92:
             st.session_state.n = 0
         rerun()
             
-    if col2.button("Previous image",key = chr(st.session_state.previous_key)):
-        st.session_state.annotation_key=st.session_state.annotation_key+1
-        st.session_state.n=st.session_state.n-1
+    if col2.button("Previous image",key = chr(key_list[2])):
+        #st.session_state.annotation_key=st.session_state.annotation_key+1
+        #st.session_state.n=st.session_state.n-1
         st.session_state.previous_key=st.session_state.previous_key+1
         if st.session_state.n == -1:
             st.session_state.n = 91
