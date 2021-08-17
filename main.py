@@ -23,10 +23,6 @@ if 'start_time' not in st.session_state:
     st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
 if 'n' not in st.session_state:
     st.session_state.n=0
-if 'next_key' not in st.session_state:
-    st.session_state.next_key=100
-if 'previous_key' not in st.session_state:
-    st.session_state.previous_key=200
 if 'annotation_key' not in st.session_state:
     st.session_state.annotation_key=1
 name = st.sidebar.text_input("Input your name and press Enter please:","")
@@ -59,7 +55,6 @@ if (name!=''):
     col1.image("./paintings/images/"+image_name)
     with open("./paintings/descriptions/"+os.path.splitext(image_name)[0]+'.json','r') as json_file:
         meta_data = json.load(json_file)
-    
     col2.markdown('# Annotation')
     #col2.markdown("** Original caption: **"+meta_data["annot"])
     #col2.markdown("** Provided caption: **"+provided_des)
@@ -89,7 +84,6 @@ if (name!=''):
     key_next = st.session_state.next_key
     if col2.button("Next image"):
         st.session_state.annotation_key=st.session_state.annotation_key+1
-        st.session_state.next_key=st.session_state.next_key+1
         st.session_state.n=st.session_state.n+1
         if st.session_state.n == 92:
             st.session_state.n = 0
@@ -98,7 +92,6 @@ if (name!=''):
     if col2.button("Previous image"):
         st.session_state.annotation_key=st.session_state.annotation_key+1
         st.session_state.n=st.session_state.n-1
-        st.session_state.previous_key=st.session_state.previous_key+1
         if st.session_state.n == -1:
             st.session_state.n = 91
         rerun()
