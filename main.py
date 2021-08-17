@@ -60,7 +60,6 @@ if (name!=''):
     #col2.markdown("** Provided caption: **"+provided_des)
     anno_place = col2.empty()
     #value = " "
-    key_annot = st.session_state.annotation_key
     annotation = anno_place.text_area("Input annotation:", height=100, key=chr(key_annot))
     if annotation:
         #if meta_data["annot"]!="nan":
@@ -81,14 +80,12 @@ if (name!=''):
         #with open(work_dir+os.path.splitext(image_name)[0]+'.json', 'w') as json_file:
             #json.dump(annot, json_file)
         st.session_state.start_time = datetime.datetime.now().time().strftime('%H:%M:%S')
-    key_next = st.session_state.next_key
     if col2.button("Next image"):
         st.session_state.annotation_key=st.session_state.annotation_key+1
         st.session_state.n=st.session_state.n+1
         if st.session_state.n == 92:
             st.session_state.n = 0
-        rerun()
-    key_previous = st.session_state.previous_key        
+        rerun() 
     if col2.button("Previous image"):
         st.session_state.annotation_key=st.session_state.annotation_key+1
         st.session_state.n=st.session_state.n-1
